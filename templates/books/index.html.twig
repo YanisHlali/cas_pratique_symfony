@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BooksController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello ! ✅</h1>
+
+        {% for book in data %}
+            <div class="card">
+                <h2>{{ book["title"] }}</h2>
+                <p>{{ book["authorName"] }}</p>
+                <p>{{ book.date|date('Y-m-d') }}</p>
+                {% for category in book["categoryNames"] %}
+                    <p>{{ category.name }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Modification de la catégorie
+	{{ category.name }}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container mt-4">
+		<h1 class="text-center">Modification de la catégorie
+			{{ category.name }}</h1>
+		{% include 'categories/_form.html.twig' with {buttonLabel: 'Modifier'} %}
+		<a href="{{ path('app_categories') }}" class="btn btn-primary mt-4">Retour à la liste</a>
+	</section>
+{% endblock %}

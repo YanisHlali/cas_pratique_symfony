@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BooksController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h2>Présentation d'un livre</h2>
+
+    <p>
+        <strong>Nom</strong> : {{ book.title }}<br />
+        <strong>Auteur</strong> : {{ book.authorName }} <br />
+        <strong>Catégorie</strong> : {% for category in book.categoryNames %}{{ category.name }} {% endfor %}<br />
+        <strong>ISBN</strong> : {{ book.isbn }}<br />
+        <strong>Date</strong> : {{ book.date|date('d/m/Y') }}<br />
+    </p>
+
+
+
+    <p>
+        <a href="{{ path('app_books') }}">Retour à la liste des livres</a>
+    </p>
+</div>
+{% endblock %}
