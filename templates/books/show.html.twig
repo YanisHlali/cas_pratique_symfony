@@ -1,28 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BooksController!{% endblock %}
+{% block title %}Présentation du Livre{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mt-4">
+    <h2 class="mb-3">Présentation du Livre</h2>
 
-<div class="example-wrapper">
-    <h2>Présentation d'un livre</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text">
+                <strong>Auteur</strong> : {{ book.authorName }} <br>
+                <strong>Catégorie</strong> : 
+                {% for category in book.categoryNames %}
+                    <span class="badge bg-secondary">{{ category.name }}</span>
+                {% endfor %}
+                <br>
+                <strong>ISBN</strong> : {{ book.isbn }}<br>
+                <strong>Date</strong> : {{ book.date|date('d/m/Y') }}<br>
+            </p>
+        </div>
+    </div>
 
-    <p>
-        <strong>Nom</strong> : {{ book.title }}<br />
-        <strong>Auteur</strong> : {{ book.authorName }} <br />
-        <strong>Catégorie</strong> : {% for category in book.categoryNames %}{{ category.name }} {% endfor %}<br />
-        <strong>ISBN</strong> : {{ book.isbn }}<br />
-        <strong>Date</strong> : {{ book.date|date('d/m/Y') }}<br />
-    </p>
-
-
-
-    <p>
-        <a href="{{ path('app_books') }}">Retour à la liste des livres</a>
-    </p>
+    <div class="mt-3 d-flex justify-content-between">
+        <a href="{{ path('app_books_edit', {'id': book.id}) }}" class="btn btn-outline-primary">Modifier</a>
+        <a href="{{ path('app_books_delete', {'id': book.id}) }}" class="btn btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?');">Supprimer</a>
+        <a href="{{ path('app_books') }}" class="btn btn-secondary">Retour à la liste des livres</a>
+    </div>
 </div>
 {% endblock %}

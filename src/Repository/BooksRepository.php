@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Authors;
 use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
+use Psr\Log\LoggerInterface;
+
 
 /**
  * @extends ServiceEntityRepository<Books>
@@ -31,7 +33,8 @@ class BooksRepository extends ServiceEntityRepository
         $this->_em->persist($book);
         $this->_em->flush();
     }
-
+    
+    
     // src/Repository/BooksRepository.php
 
     public function findBookWithCategories($bookId)

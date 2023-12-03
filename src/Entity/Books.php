@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BooksRepository;
-use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,8 +28,9 @@ class Books
 
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
-    #[ORM\Column(length:255)]
-    private ?DateTime $date = null;
+    #[ORM\Column(type: 'datetime', length: 255)]
+    private ?DateTimeInterface $date = null;
+    
 
     public function __construct()
     {
@@ -112,14 +113,14 @@ class Books
         return $this;
     }
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date): static
+    public function setDate(DateTimeInterface $date): self
     {
-        $this->date = $date->format('Y-m-d H:i:s');
+        $this->date = $date;
 
         return $this;
     }

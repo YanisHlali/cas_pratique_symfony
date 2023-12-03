@@ -23,7 +23,7 @@ class BooksType extends AbstractType
         ->add('title')
         ->add('author', EntityType::class, [
             'label' => 'Auteur:',
-            'required' => false,
+            'required' => true,
             'class' => Authors::class,
             'choice_label' => 'name',
             'query_builder' => function (EntityRepository $er): QueryBuilder {
@@ -31,12 +31,12 @@ class BooksType extends AbstractType
                     ->orderBy('a.name', 'ASC');
             },
             'expanded' => false,
-            'multiple' => false, // Un seul auteur peut être sélectionné pour un livre
-            'by_reference' => true, // Cela peut être omis puisque c'est la valeur par défaut pour les champs non multiples
+            'multiple' => false, 
+            'by_reference' => true,
         ])    
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie:',
-                'required' => false,
+                'required' => true,
                 'class' => Categories::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
@@ -48,11 +48,11 @@ class BooksType extends AbstractType
             ])
             ->add('isbn', null, [
                 'label' => 'ISBN:',
-                'required' => false,
+                'required' => true,
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de publication:',
-                'required' => false,
+                'required' => true,
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
