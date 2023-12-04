@@ -32,7 +32,7 @@ class BooksController extends AbstractController
             $this->booksRepository->create($books);
 
             // Redirige vers la liste des auteurs
-            return $this->redirectToRoute('app_categories');
+            return $this->redirectToRoute('app_books');
         }
 
         return $this->render('books/create.html.twig', [
@@ -45,28 +45,21 @@ class BooksController extends AbstractController
     {
         $books = $this->booksRepository->findAll();
 
-        # Vérifier si l'objet est vide
-        if (!$books) {
-            throw $this->createNotFoundException(
-                'No books found in books\' table.'
-            );
-        }
-
         return $this->render('books/index.html.twig', [
-            'data' => $books,
+            'data' => $books ? $books : [],
         ]);
     }
 
-    #[Route('/books/{id}', name: 'app_books_show')]
+    #[Route('/book/{id}', name: 'app_books_show')]
     public function show(int $id): Response
     {
-        // Affiche un auteur
-        $books = $this->booksRepository->findOne($id);
-
+        $book = $this->booksRepository->findOne($id);
+    
         return $this->render('books/show.html.twig', [
-            'book' => $books,
+            'book' => $book,
         ]);
     }
+    
 
     #[Route('/books/{id}/edit', name: 'app_books_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
@@ -93,28 +86,21 @@ class BooksController extends AbstractController
     }
 
     #[Route('/books/{id}/delete', name: 'app_books_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, int $id): Response
+    public function delete(int $id, EntityManagerInterface $entityManager): Response
     {
-        $books = $this->booksRepository->findOneBookWithAuthorAndCategories($id);
-
-        $form = $this->createForm(BooksType::class, $books);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
-
-            $this->booksRepository->delete($books);
-
-            // Redirige vers la liste des auteurs
-            return $this->redirectToRoute('app_books');
+        $book = $this->booksRepository->find($id);
+    
+        // Vérifie si le livre existe
+        if (!$book) {
+            throw $this->createNotFoundException('Le livre demandé n\'existe pas.');
         }
-
-        return $this->render('books/delete.html.twig', [
-            'form' => $form->createView(),
-            'book' => $books,
-        ]);
+    
+        $entityManager->remove($book);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_books');
     }
+    
 
 
 }

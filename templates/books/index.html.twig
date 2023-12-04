@@ -9,25 +9,29 @@
         <a href="{{ path('app_books_create') }}" class="btn btn-primary">Créer un Nouveau Livre</a>
     </div>
 
-    <div class="row">
-        {% for book in data %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <a href="{{ path('app_books_show', {'id': book.id}) }}" class="text-dark">
-                            <h5 class="card-title">{{ book["title"] }}</h5>
-                        </a>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ book["authorName"] }}</h6>
-                        <p class="card-text">{{ book.date|date('Y-m-d') }}</p>
-                        {% for category in book["categoryNames"] %}
-                            <span class="badge bg-secondary">{{ category.name }}</span>
-                        {% endfor %}
+    {% if data|length > 0 %}
+        <div class="row">
+            {% for book in data %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <a href="{{ path('app_books_show', {'id': book.id}) }}" class="text-dark">
+                                <h5 class="card-title">{{ book["title"] }}</h5>
+                            </a>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ book["authorName"] }}</h6>
+                            <p class="card-text">{{ book.date|date('Y-m-d') }}</p>
+                            {% for category in book["categoryNames"] %}
+                                <span class="badge bg-secondary">{{ category.name }}</span>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <p>Aucun livre n'a été trouvé.</p>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Aucun livre n'a été trouvé. <a href="{{ path('app_books_create') }}">Créez un nouveau livre.</a>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

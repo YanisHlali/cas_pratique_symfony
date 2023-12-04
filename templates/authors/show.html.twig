@@ -6,12 +6,29 @@
 <div class="container mt-4">
     <h2 class="mb-3">Présentation de l'Auteur</h2>
 
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">{{ author.name }}</h5>
             <!-- Ajoutez d'autres détails de l'auteur ici si nécessaire -->
         </div>
     </div>
+
+    {% if author.books|default([])|length > 0 %}
+        <div class="mb-3">
+            <h4>Livres de l'Auteur :</h4>
+            <ul>
+                {% for book in author.books %}
+                    <li>
+                        <a href="{{ path('app_books_show', {'id': book.id}) }}">
+                            {{ book.title }} ({{ book.date|date('Y') }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>Cet auteur n'a écrit aucun livre.</p>
+    {% endif %}
 
     <div class="mt-3">
         <a href="{{ path('app_authors') }}" class="btn btn-secondary">Retour à la liste des auteurs</a>

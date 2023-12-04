@@ -14,6 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Isbn;
 
 class BooksType extends AbstractType
 {
@@ -46,9 +48,15 @@ class BooksType extends AbstractType
                 'expanded' => false,
                 'multiple' => true,
             ])
-            ->add('isbn', null, [
+            ->add('isbn', TextType::class, [
                 'label' => 'ISBN:',
                 'required' => true,
+                'constraints' => [
+                    new Isbn([
+                        'type' => 'isbn13',
+                        'message' => 'Entrez un numéro ISBN-13 valide.',
+                    ]),
+                ],
             ])
             ->add('date', DateType::class, [
                 'label' => 'Date de publication:',
@@ -56,7 +64,6 @@ class BooksType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
             ])
-            // ... autres champs ...
         ;
     }
 
@@ -64,6 +71,7 @@ class BooksType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Books::class,
+            'csrf_protection' => false,
         ]);
     }
 }

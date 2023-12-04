@@ -18,6 +18,17 @@ class AuthorsController extends AbstractController
         private EntityManagerInterface $em,
     ) {}
 
+    #[Route('/', name: 'app_home', methods: ['GET'])]
+    public function home(): Response
+    {
+        // Affiche tous les auteurs
+        $authors = $this->authorsRepository->findAll();
+
+        return $this->render('authors/index.html.twig', [
+            'authors' => $authors,
+        ]);
+    }
+
     #[Route('/authors/create', name: 'app_authors_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
@@ -53,11 +64,11 @@ class AuthorsController extends AbstractController
     #[Route('/authors/{id}', name: 'app_authors_show')]
     public function show(int $id): Response
     {
-        // Affiche un auteur
         $author = $this->authorsRepository->findOne($id);
 
         return $this->render('authors/show.html.twig', [
             'author' => $author,
+            'books' => $author->getBooks()->toArray(),
         ]);
     }
 

@@ -48,19 +48,27 @@ class CategoriesController extends AbstractController
 
         return $this->render('categories/index.html.twig', [
             'categories' => $categories,
-        ]);
+        ]); 
     }
 
-    #[Route('/categories/{id}', name: 'app_categories_show')]
+    #[Route('/category/{id}', name: 'app_categories_show')]
     public function show(int $id): Response
     {
-        // Affiche un auteur
-        $categories = $this->categoriesRepository->findOne($id);
+        $category = $this->categoriesRepository->find($id);
+
+        // Transmet un message si la catégorie n'existe pas
+        if (!$category) {
+            $message = 'Cette catégorie n\'existe pas.';
+        } else {
+            $message = '';
+        }
 
         return $this->render('categories/show.html.twig', [
-            'categories' => $categories,
+            'category' => $category,
+            'message' => $message,
         ]);
     }
+ 
 
     #[Route('/categories/{id}/edit', name: 'app_categories_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
