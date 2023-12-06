@@ -1,7 +1,5 @@
 <?php
 
-// src/Form/AuthorType.php
-
 namespace App\Form;
 
 use App\Entity\Authors;

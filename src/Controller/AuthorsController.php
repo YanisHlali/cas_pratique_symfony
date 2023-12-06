@@ -21,7 +21,6 @@ class AuthorsController extends AbstractController
     #[Route('/', name: 'app_home', methods: ['GET'])]
     public function home(): Response
     {
-        // Affiche tous les auteurs
         $authors = $this->authorsRepository->findAll();
 
         return $this->render('authors/index.html.twig', [
@@ -38,10 +37,8 @@ class AuthorsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
             $this->authorsRepository->create($author);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_authors');
         }
 
@@ -53,7 +50,6 @@ class AuthorsController extends AbstractController
     #[Route('/authors', name: 'app_authors')]
     public function index(): Response
     {
-        // Affiche tous les auteurs
         $authors = $this->authorsRepository->findAll();
 
         return $this->render('authors/index.html.twig', [
@@ -75,20 +71,15 @@ class AuthorsController extends AbstractController
     #[Route('/authors/{id}/edit', name: 'app_authors_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
-        // Récupère l'auteur
         $author = $this->authorsRepository->findOne($id);
 
-        // Crée le formulaire
         $form = $this->createForm(AuthorsType::class, $author);
 
-        // Traite le formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
             $this->authorsRepository->update($author);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_authors');
         }
 
@@ -101,13 +92,10 @@ class AuthorsController extends AbstractController
     #[Route('/authors/{id}/delete', name: 'app_authors_delete', methods: ['GET'])]
     public function delete(int $id): Response
     {
-        // Récupère l'auteur
         $author = $this->authorsRepository->findOne($id);
 
-        // Supprime l'auteur
         $this->authorsRepository->delete($author);
 
-        // Redirige vers la liste des auteurs
         return $this->redirectToRoute('app_authors');
     }
 }

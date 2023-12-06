@@ -42,7 +42,7 @@ class AuthorsRepository extends ServiceEntityRepository
           return parent::findBy($criteria, ['name' => 'ASC'], $limit, $offset);
      }
 
-    public function update(Authors $author): void
+    public function update(): void
     {
         $this->_em->flush();
     }
@@ -52,29 +52,4 @@ class AuthorsRepository extends ServiceEntityRepository
         $this->_em->remove($author);
         $this->_em->flush();
     }
-
-//    /**
-//     * @return Authors[] Returns an array of Authors objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Authors
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

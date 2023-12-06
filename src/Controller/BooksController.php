@@ -28,10 +28,8 @@ class BooksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
             $this->booksRepository->create($books);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_books');
         }
 
@@ -71,11 +69,9 @@ class BooksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
 
             $this->booksRepository->update($books);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_books');
         }
 
@@ -90,7 +86,6 @@ class BooksController extends AbstractController
     {
         $book = $this->booksRepository->find($id);
     
-        // Vérifie si le livre existe
         if (!$book) {
             throw $this->createNotFoundException('Le livre demandé n\'existe pas.');
         }

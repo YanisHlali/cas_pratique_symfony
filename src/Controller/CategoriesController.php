@@ -28,10 +28,8 @@ class CategoriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
             $this->categoriesRepository->create($categories);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_categories');
         }
 
@@ -43,7 +41,6 @@ class CategoriesController extends AbstractController
     #[Route('/categories', name: 'app_categories')]
     public function index(): Response
     {
-        // Affiche tous les auteurs
         $categories = $this->categoriesRepository->findAll();
 
         return $this->render('categories/index.html.twig', [
@@ -56,7 +53,6 @@ class CategoriesController extends AbstractController
     {
         $category = $this->categoriesRepository->find($id);
 
-        // Transmet un message si la catégorie n'existe pas
         if (!$category) {
             $message = 'Cette catégorie n\'existe pas.';
         } else {
@@ -73,21 +69,15 @@ class CategoriesController extends AbstractController
     #[Route('/categories/{id}/edit', name: 'app_categories_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
-        // Récupère l'auteur
         $categories = $this->categoriesRepository->findOne($id);
 
-        // Crée le formulaire
         $form = $this->createForm(CategoriesType::class, $categories);
 
-        // Gère la requête
         $form->handleRequest($request);
 
-        // Si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarde l'auteur
             $this->categoriesRepository->update($categories);
 
-            // Redirige vers la liste des auteurs
             return $this->redirectToRoute('app_categories');
         }
 
@@ -100,13 +90,10 @@ class CategoriesController extends AbstractController
     #[Route('/categories/{id}/delete', name: 'app_categories_delete', methods: ['GET', 'POST'])]
     public function delete(int $id): Response
     {
-        // Récupère l'auteur
         $category = $this->categoriesRepository->findOne($id);
 
-        // Supprime l'auteur
         $this->categoriesRepository->delete($category);
 
-        // Redirige vers la liste des auteurs
         return $this->redirectToRoute('app_categories');
     }
 }

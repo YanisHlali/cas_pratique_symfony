@@ -1,12 +1,10 @@
 <?php
-// src/Form/BookType.php
 
 namespace App\Form;
 
 use App\Entity\Authors;
 use App\Entity\Books;
 use App\Entity\Categories;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
@@ -36,34 +34,34 @@ class BooksType extends AbstractType
             'multiple' => false, 
             'by_reference' => true,
         ])    
-            ->add('category', EntityType::class, [
-                'label' => 'Catégorie:',
-                'required' => true,
-                'class' => Categories::class,
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC');
-                },
-                'expanded' => false,
-                'multiple' => true,
-            ])
-            ->add('isbn', TextType::class, [
-                'label' => 'ISBN:',
-                'required' => false,
-                'constraints' => [
-                    new Isbn([
-                        'type' => 'isbn13',
-                        'message' => 'Entrez un numéro ISBN-13 valide.',
-                    ]),
-                ],
-            ])
-            ->add('date', DateType::class, [
-                'label' => 'Date de publication:',
-                'required' => true,
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-            ])
+        ->add('category', EntityType::class, [
+            'label' => 'Catégorie:',
+            'required' => true,
+            'class' => Categories::class,
+            'choice_label' => 'name',
+            'query_builder' => function (EntityRepository $er): QueryBuilder {
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC');
+            },
+            'expanded' => false,
+            'multiple' => true,
+        ])
+        ->add('isbn', TextType::class, [
+            'label' => 'ISBN:',
+            'required' => false,
+            'constraints' => [
+                new Isbn([
+                    'type' => 'isbn13',
+                    'message' => 'Entrez un numéro ISBN-13 valide.',
+                ]),
+            ],
+        ])
+        ->add('date', DateType::class, [
+            'label' => 'Date de publication:',
+            'required' => true,
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd',
+        ])
         ;
     }
 
