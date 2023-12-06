@@ -50,7 +50,7 @@ class BooksType extends AbstractType
             ])
             ->add('isbn', TextType::class, [
                 'label' => 'ISBN:',
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new Isbn([
                         'type' => 'isbn13',
