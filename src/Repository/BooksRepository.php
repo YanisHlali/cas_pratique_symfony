@@ -5,10 +5,7 @@ namespace App\Repository;
 use App\Entity\Books;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Authors;
-use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
-use Psr\Log\LoggerInterface;
 
 
 /**
